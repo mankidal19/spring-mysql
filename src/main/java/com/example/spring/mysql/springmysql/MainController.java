@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,14 +25,14 @@ public class MainController {
     private UserRepository userRepository;
 
     @PostMapping(path = "/addNewUser")
-    public @ResponseBody String addNewUser(@RequestParam String name, @RequestParam String email) {
+    public ResponseEntity<String> addNewUser(@RequestParam String name, @RequestParam String email) {
         User newUser = new User(name, email);
         try {
             userRepository.save(newUser);
         } catch(Exception e) {
-            return "Error!";
+            return new ResponseEntity<>("Error!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return "Saved";
+        return new ResponseEntity<>("Saved", HttpStatus.OK);
         
     }
 
