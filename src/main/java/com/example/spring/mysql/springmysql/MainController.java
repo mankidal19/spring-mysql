@@ -33,7 +33,7 @@ public class MainController {
         
     }
 
-    @GetMapping(path = "getAllUsers")
+    @GetMapping(path = "/getAllUsers")
     public @ResponseBody Iterable<User> getAllUsers() {
         // This returns a JSON or XML with the users
         return userRepository.findAll();
